@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 antialiased transition-colors duration-300 min-h-screen overflow-x-hidden flex flex-col relative z-0" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Background Glassy Orbs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] aspect-square bg-gradient-to-br from-zinc-200/50 to-transparent dark:from-zinc-800/40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] aspect-square bg-gradient-to-tl from-zinc-200/50 to-transparent dark:from-zinc-800/40 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Landing Page -->
+    <header class="flex items-center justify-between px-6 py-4 border-b border-white/40 dark:border-zinc-800/50 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-xl fixed top-0 w-full z-10">
+        <div class="font-semibold tracking-tighter text-lg">NEXUS</div>
+        <div class="flex items-center gap-4">
+            <button onclick="toggleThemeGlobal()" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center justify-center transition-colors">
+                <iconify-icon icon="solar:sun-linear" class="dark:hidden text-lg"></iconify-icon>
+                <iconify-icon icon="solar:moon-linear" class="hidden dark:block text-lg"></iconify-icon>
+            </button>
+            <div class="h-4 w-[1px] bg-zinc-300 dark:bg-zinc-700"></div>
+            <button onclick="navigateTo('login')" class="text-sm font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors">Log in</button>
+            <button onclick="navigateTo('signup')" class="bg-zinc-900/90 backdrop-blur-sm text-zinc-50 hover:bg-zinc-800 dark:bg-zinc-100/90 dark:text-zinc-900 dark:hover:bg-zinc-200 px-3 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm">Sign up</button>
+        </div>
+    </header>
+    <main class="flex-grow flex flex-col items-center justify-center pt-24 pb-12 px-6 text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight max-w-3xl mb-6 text-zinc-900 dark:text-zinc-50">Build faster with intelligent tools.</h1>
+        <p class="text-base md:text-lg text-zinc-500 dark:text-zinc-400 max-w-2xl mb-10">A streamlined operating system for your digital business. Manage users, track analytics, and ship products with unprecedented speed.</p>
+        <div class="flex gap-4 mb-24">
+            <button onclick="navigateTo('signup')" class="bg-zinc-900/90 backdrop-blur-sm text-zinc-50 hover:bg-zinc-800 dark:bg-zinc-100/90 dark:text-zinc-900 dark:hover:bg-zinc-200 px-5 py-2.5 rounded-md text-sm font-medium transition-colors shadow-sm">Get Started</button>
+            <button class="bg-white/80 backdrop-blur-md border border-white/60 text-zinc-900 hover:bg-zinc-50 dark:bg-zinc-900/80 dark:border-zinc-800/60 dark:text-zinc-100 dark:hover:bg-zinc-800 px-5 py-2.5 rounded-md text-sm font-medium transition-colors shadow-sm flex items-center gap-2">
+                <iconify-icon icon="solar:play-circle-linear" class="text-base"></iconify-icon> View Demo
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full text-left">
+            <div class="p-6 rounded-xl border border-white/60 bg-white/60 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-900/60 shadow-sm">
+                <iconify-icon icon="solar:users-group-two-rounded-linear" class="text-2xl mb-4 text-zinc-700 dark:text-zinc-300"></iconify-icon>
+                <h3 class="text-base font-medium tracking-tight mb-2">User Management</h3>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">Seamlessly handle roles, permissions, and directory data with our integrated CRM tools.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-white/60 bg-white/60 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-900/60 shadow-sm">
+                <iconify-icon icon="solar:chart-square-linear" class="text-2xl mb-4 text-zinc-700 dark:text-zinc-300"></iconify-icon>
+                <h3 class="text-base font-medium tracking-tight mb-2">Deep Analytics</h3>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">Gain actionable insights with real-time charting and comprehensive metric tracking.</p>
+            </div>
+            <div class="p-6 rounded-xl border border-white/60 bg-white/60 backdrop-blur-md dark:border-zinc-800/60 dark:bg-zinc-900/60 shadow-sm">
+                <iconify-icon icon="solar:box-linear" class="text-2xl mb-4 text-zinc-700 dark:text-zinc-300"></iconify-icon>
+                <h3 class="text-base font-medium tracking-tight mb-2">Inventory Control</h3>
+                <p class="text-sm text-zinc-500 dark:text-zinc-400">Manage your product catalog, track stock levels, and organize SKUs efficiently.</p>
+            </div>
+        </div>
+    </main>
+    <footer class="py-8 px-6 border-t border-white/40 dark:border-zinc-800/50 text-center text-xs text-zinc-500 flex justify-between items-center w-full relative z-10">
+        <div class="font-semibold tracking-tighter text-sm text-zinc-900 dark:text-zinc-100">NEXUS</div>
+        <div>© 2024 Platform Inc. All rights reserved.</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

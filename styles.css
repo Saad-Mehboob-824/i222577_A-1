@@ -1,0 +1,17 @@
+/* styles.css */
+
+#modal-content {
+  color: #111827;
+}
+html.dark #modal-content {
+  color: #f8fafc;
+}
+#modal-content input,
+#modal-content select,
+#modal-content button,
+#modal-content label,
+#modal-content p {
+  color: inherit;
+}
+
+/* Additional custom styles if needed */

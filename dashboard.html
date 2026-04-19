@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NEXUS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class' }</script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gradient-to-br from-zinc-50 to-zinc-100 dark:from-zinc-950 dark:to-zinc-900 text-zinc-900 antialiased transition-colors duration-300 min-h-screen overflow-x-hidden flex relative z-0" style="font-family: 'Inter', sans-serif;">
+
+    <!-- Background Glassy Orbs -->
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] aspect-square bg-gradient-to-br from-zinc-200/50 to-transparent dark:from-zinc-800/40 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] aspect-square bg-gradient-to-tl from-zinc-200/50 to-transparent dark:from-zinc-800/40 rounded-full blur-3xl"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 border-r border-white/40 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl flex flex-col fixed h-full z-20 transition-transform -translate-x-full md:translate-x-0">
+        <div class="h-14 flex items-center px-6 border-b border-white/40 dark:border-zinc-800/50 justify-between">
+            <div class="font-semibold tracking-tighter text-lg">NEXUS</div>
+            <button onclick="toggleSidebar()" class="md:hidden text-zinc-500"><iconify-icon icon="solar:close-circle-linear" class="text-lg"></iconify-icon></button>
+        </div>
+        <nav class="flex-grow py-4 px-3 space-y-1">
+            <button onclick="navigateTo('dashboard')" class="nav-btn active w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-zinc-200/50 dark:bg-zinc-800/50 text-zinc-900 dark:text-zinc-100">
+                <iconify-icon icon="solar:widget-linear" class="text-lg"></iconify-icon> Dashboard
+            </button>
+            <button onclick="navigateTo('users')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-zinc-600 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/50">
+                <iconify-icon icon="solar:users-group-rounded-linear" class="text-lg"></iconify-icon> Users
+            </button>
+            <button onclick="navigateTo('products')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-zinc-600 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/50">
+                <iconify-icon icon="solar:box-linear" class="text-lg"></iconify-icon> Products
+            </button>
+            <button onclick="navigateTo('analytics')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-zinc-600 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/50">
+                <iconify-icon icon="solar:chart-linear" class="text-lg"></iconify-icon> Analytics
+            </button>
+            <button onclick="navigateTo('settings')" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-zinc-600 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/50">
+                <iconify-icon icon="solar:settings-linear" class="text-lg"></iconify-icon> Settings
+            </button>
+        </nav>
+        <div class="p-4 border-t border-white/40 dark:border-zinc-800/50">
+            <button onclick="logout()" class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors text-zinc-600 hover:bg-zinc-200/50 dark:text-zinc-400 dark:hover:bg-zinc-800/50">
+                <iconify-icon icon="solar:logout-2-linear" class="text-lg"></iconify-icon> Log out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-grow flex flex-col md:ml-64 w-full min-h-screen">
+        <!-- Header -->
+        <header class="h-14 border-b border-white/40 dark:border-zinc-800/50 bg-white/60 dark:bg-zinc-950/60 backdrop-blur-xl flex items-center justify-between px-4 sm:px-6 sticky top-0 z-10 w-full">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="md:hidden text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">
+                    <iconify-icon icon="solar:hamburger-menu-linear" class="text-xl"></iconify-icon>
+                </button>
+                <h2 class="font-medium text-sm tracking-tight capitalize">Dashboard</h2>
+            </div>
+            <div class="flex items-center gap-4 relative">
+                <button onclick="toggleThemeGlobal()" class="text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center justify-center transition-colors">
+                    <iconify-icon icon="solar:sun-linear" class="dark:hidden text-lg"></iconify-icon>
+                    <iconify-icon icon="solar:moon-linear" class="hidden dark:block text-lg"></iconify-icon>
+                </button>
+                <button onclick="toggleNotifPanel()" class="relative text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 flex items-center justify-center transition-colors">
+                    <iconify-icon icon="solar:bell-linear" class="text-lg"></iconify-icon>
+                    <span id="notif-badge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1 rounded-full hidden min-w-[18px] text-center">0</span>
+                </button>
+                <div class="h-4 w-[1px] bg-zinc-300 dark:bg-zinc-700"></div>
+                <div class="w-7 h-7 rounded-full bg-zinc-200/80 dark:bg-zinc-800/80 backdrop-blur-sm flex items-center justify-center text-xs font-medium border border-zinc-300/50 dark:border-zinc-700/50" id="user-avatar">A</div>
+            </div>
+        </header>
+
+        <!-- Content Area -->
+        <main class="flex-grow p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full relative z-0">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/60 dark:border-zinc-800/60 rounded-xl p-5 shadow-sm">
+                    <div class="text-xs font-medium text-zinc-500 mb-1 flex justify-between items-center">Total Revenue <iconify-icon icon="solar:dollar-linear" class="text-zinc-400"></iconify-icon></div>
+                    <div class="text-2xl font-semibold tracking-tight" id="dash-rev">$0</div>
+                    <div class="text-xs text-zinc-400 mt-2">+12% from last month</div>
+                </div>
+                <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/60 dark:border-zinc-800/60 rounded-xl p-5 shadow-sm">
+                    <div class="text-xs font-medium text-zinc-500 mb-1 flex justify-between items-center">Total Users <iconify-icon icon="solar:users-group-rounded-linear" class="text-zinc-400"></iconify-icon></div>
+                    <div class="text-2xl font-semibold tracking-tight" id="dash-users">0</div>
+                    <div class="text-xs text-zinc-400 mt-2">+4% from last month</div>
+                </div>
+                <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/60 dark:border-zinc-800/60 rounded-xl p-5 shadow-sm">
+                    <div class="text-xs font-medium text-zinc-500 mb-1 flex justify-between items-center">Active Orders <iconify-icon icon="solar:cart-linear" class="text-zinc-400"></iconify-icon></div>
+                    <div class="text-2xl font-semibold tracking-tight" id="dash-orders">0</div>
+                    <div class="text-xs text-zinc-400 mt-2">+18% from last month</div>
+                </div>
+            </div>
+            <div class="bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border border-white/60 dark:border-zinc-800/60 rounded-xl p-5 shadow-sm">
+                <h3 class="text-sm font-medium mb-4">Revenue Overview</h3>
+                <div class="h-64 w-full relative"><canvas id="dashChart"></canvas></div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating Notification Panel -->
+    <div id="notif-panel" class="hidden fixed top-14 right-4 w-96 max-h-96 bg-white/95 dark:bg-zinc-950/95 border border-white/60 dark:border-zinc-800/60 rounded-xl shadow-2xl backdrop-blur-xl z-50 flex flex-col overflow-hidden">
+        <div class="px-4 py-3 border-b border-zinc-200/50 dark:border-zinc-800/50 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="solar:bell-linear" class="text-lg text-zinc-900 dark:text-zinc-100"></iconify-icon>
+                <h3 class="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Notifications</h3>
+            </div>
+            <button onclick="toggleNotifPanel()" class="text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+        </div>
+        <div id="notif-panel-list" class="flex-grow overflow-y-auto space-y-2 p-3 text-zinc-900 dark:text-zinc-100">
+            <!-- Rendered via JS -->
+        </div>
+        <div class="border-t border-zinc-200/50 dark:border-zinc-800/50 px-3 py-2 text-center bg-white/90 dark:bg-zinc-950/90">
+            <button onclick="clearNotifs()" class="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100">Clear all</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
